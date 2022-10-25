@@ -50,6 +50,18 @@
     let guessedletters = "";
     let tries = 7;
 
+
+    function reset()
+    {
+        document.getElementById("questionmarks").innerHTML = "Word: ";
+        document.getElementById("wordtoguess").value = "";
+        document.getElementById("wordtoguess").disabled = false;
+        document.getElementById("triesleft").innerHTML = "7 tries left";
+        document.getElementById("guessedletters").innerHTML = "";
+        guessedletters = "";
+        tries = 7;
+    }
+
     function setQuestionMarks()
     {
         const numberOfLetters = document.getElementById("wordtoguess").value.length;
@@ -65,6 +77,8 @@
         console.log (questionMarks);
     }
 
+    
+
     function checkLetter(letter)
     {
         if (guessedletters.length === 0)
@@ -76,10 +90,27 @@
         else{
             // second and more letters
         }
-        addLetter(letter);
-        console.log("checkLetter");
-        console.log(letter);
+
+        if (isNotUsed(letter))
+        {
+            addLetter(letter);
+        }
+        //console.log("checkLetter");
+        //console.log(letter);
         document.getElementById('letter').value = "";
+    }
+
+    function isNotUsed(letter)
+    {
+        let search = document.getElementById("guessedletters").innerHTML;
+        if (search.indexOf(letter) === -1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     // when there is matching letter, make it green, not matching, make it red
