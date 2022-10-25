@@ -16,32 +16,71 @@
     <li>Sixth: Draw one diagonal line from the bottom of the body for the first "leg."</li>
     <li>Seventh: Draw the other leg.</li>
     <li>Eighth: Connect the head to the post with a "noose." Once you draw the noose the players have lost the game.</li>
-    <li>testing live server</li>
 </ul>
 <hr/>
 <div>
-<label for="wordtoguess">Enter the word to guess</label>
+<label for="wordtoguess">Enter the word to guess (capitalilzation does not matter)</label>
 <input type="password" id="wordtoguess" name="wordtoguess"/>
 <label for="letter">Enter a single letter guess</label>
 <input type="text" id="letter" name="letter"/>
 <!--   document.getElementById('letter').innerHtml does not work)  -->
 <button onclick="checkLetter(document.getElementById('letter').value)">try this letter</button>
+<button onclick="reset()">reset the game</button>
 </div>
+<p id="questionmarks" name="questionmarks">Word: </p>
 <p id="guessedletters" name="guessedletters">Guessed letters will appear here: </p>
 <script>
 
-    let guessedLetter = ""
+    let guessedletters = "";
+
+    function setQuestionMarks()
+    {
+        const numberOfLetters = document.getElementById("wordtoguess").value.length;
+        let questionMarks = document.getElementById("questionmarks").innerHTML;
+
+        for(let i = 0; i < numberOfLetters; i++)
+        {
+            questionMarks += "?";
+        }
+
+        document.getElementById("questionmarks").innerHTML = questionMarks;
+        console.log("word length is " + numberOfLetters);
+        console.log (questionMarks);
+    }
 
     function checkLetter(letter)
     {
+        if (guessedletters.length === 0)
+        {
+            // first letter
+            setQuestionMarks();
+            document.getElementById("wordtoguess").disabled = true;
+        }
+        else{
+            // second and more letters
+        }
         addLetter(letter);
         console.log("checkLetter");
         console.log(letter);
+        document.getElementById('letter').value = "";
     }
 
+    // when there is matching letter, make it green, not matching, make it red
+    // don't allow duplicate guesses
     function addLetter(letter)
     {
         document.getElementById("guessedletters").innerHTML += letter.toLowerCase() + " ";
+        guessedletters += letter;
+        console.log(guessedletters);
+        compareAndUpdate(letter);
+    }
+
+    function compareAndUpdate(letter)
+    {
+
+        const word = document.getElementById("wordtoguess").value;
+        let location = word.indexOf(letter);
+        console.log("location of " + letter + " is " + location);
     }
 
 
