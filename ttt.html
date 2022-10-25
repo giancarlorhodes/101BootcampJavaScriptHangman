@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tic Tac Toe</title>
+</head>
+<body>
+
+<h1>Tic Tac Toe using JavaScript</h1>
+<p>INSTRUCTIONS:</p>
+<ul>
+    <li>First wrong answer: Draw and upside-down "L." This is the post the man hangs from.</li>
+    <li>Second: Draw a small circle for the "head" underneath the horizontal line of the "L."</li>
+    <li>Third: Draw a line down from the bottom of the head for the "body."</li>
+    <li>Fourth: Draw one arm out from the middle of his body for the "arm."</li>
+    <li>Fifth: Draw the other arm.</li>
+    <li>Sixth: Draw one diagonal line from the bottom of the body for the first "leg."</li>
+    <li>Seventh: Draw the other leg.</li>
+    <li>Eighth: Connect the head to the post with a "noose." Once you draw the noose the players have lost the game.</li>
+    <li>testing live server</li>
+</ul>
+<hr/>
+<div>
+<label for="wordtoguess">Enter the word to guess</label>
+<input type="password" id="wordtoguess" name="wordtoguess"/>
+<label for="letter">Enter a single letter guess</label>
+<input type="text" id="letter" name="letter"/>
+<!--   document.getElementById('letter').innerHtml does not work)  -->
+<button onclick="checkLetter(document.getElementById('letter').value)">try this letter</button>
+</div>
+<p id="guessedletters" name="guessedletters">Guessed letters will appear here: </p>
+<script>
+
+    let guessedLetter = ""
+
+    function checkLetter(letter)
+    {
+        addLetter(letter);
+        console.log("checkLetter");
+        console.log(letter);
+    }
+
+    function addLetter(letter)
+    {
+        document.getElementById("guessedletters").innerHTML += letter.toLowerCase() + " ";
+    }
+
+
+</script>
+
+</body>
+</html>
