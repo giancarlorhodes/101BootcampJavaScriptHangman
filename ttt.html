@@ -2,6 +2,17 @@
 <html>
 <head>
 <title>Tic Tac Toe</title>
+<style>
+
+.description {
+  color: red;
+}
+
+.description b {
+  color: green;
+}
+
+</style>
 </head>
 <body>
 
@@ -28,10 +39,16 @@
 <button onclick="reset()">reset the game</button>
 </div>
 <p id="questionmarks" name="questionmarks">Word: </p>
-<p id="guessedletters" name="guessedletters">Guessed letters will appear here: </p>
+<label>Guessed letters here: </label>
+<label id="guessedletters" name="guessedletters" class="description"></label>
+<p id="triesleft" name="triesleft">7 tries left</p>
 <script>
 
+    // TODO: implement RESET
+    // TODO: don't duplicate guesses
+
     let guessedletters = "";
+    let tries = 7;
 
     function setQuestionMarks()
     {
@@ -69,18 +86,77 @@
     // don't allow duplicate guesses
     function addLetter(letter)
     {
-        document.getElementById("guessedletters").innerHTML += letter.toLowerCase() + " ";
+        document.getElementById("guessedletters").innerHTML += compareAndUpdate(letter) + " ";
         guessedletters += letter;
         console.log(guessedletters);
-        compareAndUpdate(letter);
+     
     }
 
     function compareAndUpdate(letter)
     {
 
         const word = document.getElementById("wordtoguess").value;
-        let location = word.indexOf(letter);
-        console.log("location of " + letter + " is " + location);
+        // let location = word.indexOf(letter); // this does not take is consideration multiple of a letter
+        let locations = getAllIndexes(word, letter);
+        
+        // array does not exist or is empty
+        if (locations === undefined || locations.length == 0) 
+        {
+            subtract();
+            return letter; // default is red
+        }
+        else
+        {
+            // this get just the ?s without the "Word: " part
+            let newvalue = document.getElementById("questionmarks").innerHTML.substr(6, 
+            document.getElementById("questionmarks").innerHTML.length);
+            console.log("newvalue: " + newvalue);
+
+            for (const iterator of locations) 
+            {
+                console.log("interator: " + iterator);
+                // could be multiple
+                // turn ? to letters
+                newvalue = setCharAt(newvalue, iterator, letter);
+                console.log("newvalue: " + newvalue);
+            }
+            document.getElementById("questionmarks").innerHTML = "Word: " + newvalue;
+            
+            if (newvalue === word)
+            {
+                document.getElementById("triesleft").innerHTML = "you win !!!";
+            }
+            return "<b>" + letter + "</b>"; // make guess green
+        }
+    }
+
+
+    function getAllIndexes(arr, val)
+    {
+        let indexes = [], i = -1;
+        while ((i = arr.indexOf(val, i+1)) != -1){
+            indexes.push(i);
+        }
+        return indexes;
+    }
+
+    function setCharAt(str,index,chr) 
+    {
+        if(index > str.length-1) return str;
+        return str.substring(0,index) + chr + str.substring(index+1);
+    }
+
+    function subtract()
+    {
+        if (tries > 1) 
+        {
+            tries -= 1;
+            document.getElementById("triesleft").innerHTML = tries + " tries left";
+        }
+        else
+        {
+            document.getElementById("triesleft").innerHTML = "you lost !!!";
+        }
     }
 
 
