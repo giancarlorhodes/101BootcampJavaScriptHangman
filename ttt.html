@@ -42,14 +42,11 @@
 <label>Guessed letters here: </label>
 <label id="guessedletters" name="guessedletters" class="description"></label>
 <p id="triesleft" name="triesleft">7 tries left</p>
-<script>
 
-    // TODO: implement RESET
-    // TODO: don't duplicate guesses
+<script>
 
     let guessedletters = "";
     let tries = 7;
-
 
     function reset()
     {
@@ -75,9 +72,7 @@
         document.getElementById("questionmarks").innerHTML = questionMarks;
         console.log("word length is " + numberOfLetters);
         console.log (questionMarks);
-    }
-
-    
+    }    
 
     function checkLetter(letter)
     {
@@ -87,7 +82,8 @@
             setQuestionMarks();
             document.getElementById("wordtoguess").disabled = true;
         }
-        else{
+        else
+        {
             // second and more letters
         }
 
@@ -95,8 +91,7 @@
         {
             addLetter(letter);
         }
-        //console.log("checkLetter");
-        //console.log(letter);
+
         document.getElementById('letter').value = "";
     }
 
@@ -123,12 +118,13 @@
      
     }
 
+    // the main function that does the work
     function compareAndUpdate(letter)
     {
 
-        const word = document.getElementById("wordtoguess").value;
+        const word = document.getElementById("wordtoguess").value; // password field
         // let location = word.indexOf(letter); // this does not take is consideration multiple of a letter
-        let locations = getAllIndexes(word, letter);
+        let locations = getAllIndexes(word, letter); // get all letter locations
         
         // array does not exist or is empty
         if (locations === undefined || locations.length == 0) 
